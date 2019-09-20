@@ -16,3 +16,12 @@ Find movie that have rating between 3 and 4
 FilterByRating = Filter moviedata BY Rating>=3 AND Rating<=4;
 RatingAnswer = FOREACH FilterByRating GENERATE CONCAT((chararray)$1,CONCAT(',',(chararray)($3))) ;
 STORE RatingAnswer INTO 'FilteredMoviesByRating';
+
+
+question 3
+Find movies with duration greater than 2 hours
+
+moviedata = LOAD 'movies_data.csv' USING PigStorage(',') AS (SNO:int,MovieName:chararray,Year:int,Rating:int,Duration:int);
+FilterByDuration= Filter moviedata BY Duration>7200;
+DurationAnswer = FOREACH FilterByDuration GENERATE CONCAT((chararray)$1,CONCAT(',',(chararray)($4))) ;
+STORE DurationAnswer INTO 'FilteredMoviesByDuration';
