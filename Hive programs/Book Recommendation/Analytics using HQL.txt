@@ -1,0 +1,60 @@
+CREATE INDEX user_index on TABLE users1 (user_id) AS'COMPACT' WITH DEFERRED REBUILD; 
+Show index on users1;
+
+
+
+CREATE INDEX user_index on  TABLE books (isbn) AS'COMPACT' WITH DEFERRED REBUILD; 
+Show index on books;
+
+
+
+
+alter table rating set tblproperties("skip.head.line.count"="1");
+alter table users1 set tblproperties("skip.head.line.count"="1");
+
+alter table books set tblproperties("skip.head.line.count"="1");
+
+
+
+
+
+1. How many users are given rating for any book?
+	select count(distinct user_id) from rating;
+ 
+
+
+
+2. Top 10 rated book?
+	select b.title,r.user_id,r.book_rating from books b join rating r on (b.isbn=r.isbn) 
+	group by b.title,r.user_id,r.book_rating order by r.book_rating desc limit 10;
+
+
+
+
+3. How many books have not rated?
+	select count(b.isbn) from books b where b.isbn not in (select distinct isbn from rating);
+
+
+
+
+4. Top 10 users who have given maximum rating for maximum book?
+	select isbn,count(isbn) as cnt from rating group by isbn order by cnt desc limit 10;
+
+
+
+
+
+5. How many books rated by user id 104,200, and 700?
+	select count(user_id) from rating where user_id="104" or user_id="200" or user_id="700" 
+	group by user_id;
+
+
+
+
+
+
+
+
+
+
+
