@@ -45,7 +45,7 @@ alter table books set tblproperties("skip.head.line.count"="1");
 
 
 5. How many books rated by user id 104,200, and 700?
-	select count(user_id) from rating where user_id="104" or user_id="200" or user_id="700" 
+	select count(user_id) from rating where user_id=104 or user_id=200 or user_id=700 
 	group by user_id;
 
 
