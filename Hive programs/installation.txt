@@ -1,0 +1,60 @@
+1. download apache-hive-2.1.1 and extract it to your home directory
+
+2. open .bashrc using  the command sudo gedit ~/.bashrc
+add these three line to the end of .bashrc
+# Set HIVE_HOME
+export HIVE_HOME=/home/hduser001/apache-hive-2.1.1-bin
+export PATH=$PATH:/home/hduser001/apache-hive-2.1.1-bin/bin
+
+3. give the command source ~/.bashrc
+
+4. Make all hadoop nodes active using the following commands
+           
+   sh ./Desktop/own.sh (which contain 12 commands)
+   start-all.sh
+   jps - check whether all 6 are displayed or not
+
+5. open the hive-env.sh which is in /home/hduser001/apache-hive-2.1.1-bin/conf
+ 
+set HADOOP_HOME and HIVE_CONF_DIR as shown below
+
+# Set HADOOP_HOME to point to a specific hadoop install directory
+ HADOOP_HOME=/usr/local/hadoop
+HADOOP_HEAPSIZE=512
+# Hive Configuration Directory can be controlled by:
+ export HIVE_CONF_DIR=/home/hduser001/apache-hive-2.1.1-bin/conf
+
+6.open hive-site.xml which is in /home/hduser001/apache-hive-2.1.1-bin/conf and change database name as shown below
+<configuration>
+<property>
+<name>javax.jdo.option.ConnectionURL</name>
+<value>jdbc:derby:;databaseName=/home/hduser001/apache-hive-2.1.1-bin/metastore_db;create=true</value>
+<description>
+
+7. sudo chmod 777 -R apache-hive-2.1.1-bin
+
+8. type hive to start with hive
+
+
+
+########=======================================================
+
+### spark  && scala
+
+1. cd /usr/local/spark
+
+2. sh ./sbin/start-all.sh
+
+#To work with shpark
+./bin/spark-shell
+
+#to work with scala
+./bin/pyspark
+
+
+
+
+
+
+
+
