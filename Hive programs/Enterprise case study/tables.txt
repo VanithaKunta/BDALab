@@ -1,0 +1,60 @@
+create table products( 
+  prod_name string, 
+  description string, 
+  category string, 
+  qty_on_hand int, 
+  prod_num string, 
+  packaged_with array<String> 
+) 
+row format delimited fields terminated by ',' collection items terminated by ':' stored as textfile;
+
+load data local inpath '/home/abhi97/Desktop/HiveData/Product1.csv' overwrite into table products;
+
+
+create table sales_staging( 
+  cust_id string, 
+  prod_num string, 
+  qty int,
+  sales_date string, 
+  sales_id string 
+) 
+comment 'staging for sales data' 
+row format delimited fields terminated by ',' stored as textfile;
+
+load data local inpath '/home/abhi97/Desktop/HiveData/Sales1.csv' into table sales_staging;
+
+
+
+create table sales( 
+  cust_id string, 
+  prod_num string, 
+  qty int, 
+  sales_id string 
+) 
+comment 'sales data for analysis' 
+partitioned by (sales_date string) 
+row format delimited fields terminated by ',' stored as textfile;
+
+insert overwrite table sales partition (sales_date = '1/9/2013') 
+select cust_id, prod_num, qty, sales_id from sales_staging ss
+where ss.sales_date = '1/9/2013';
+
+insert overwrite table sales partition (sales_date = '1/24/2013') 
+select cust_id, prod_num, qty, sales_id from sales_staging ss 
+where ss.sales_date = '1/24/2013';
+
+
+/usr/local/hadoop/bin/hadoop dfs –mkdir /user/hadoop/hive/shared_data
+
+create external table customer( 
+  fname string, 
+  lname string, 
+  status string, 
+  telno string, 
+  customer_id string, 
+  city_zip struct<city:string, zip:string> 
+) 
+comment 'external customer table' 
+row format delimited fields terminated by ',' collection items terminated by '|' location '/user/hadoop/hive/shared_data';
+
+load data local inpath '/home/abhi97/Desktop/HiveData/Customer1.csv' into table customer;
