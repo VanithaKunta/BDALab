@@ -1,0 +1,13 @@
+1. select * from products where category = 'Ram';
+
+2. select category, count(*) from products group by category;
+
+3. explain select * from customer where status = 'A';
+
+4. select * from customer where city_zip.city like '%Bangalore';
+
+5. select prod_name, qty_on_hand + 10, prod_num from products;
+
+6. select * from products where upper(category) = 'CASE';
+
+7. select explode(packaged_with) as content from products where prod_num='98820';
