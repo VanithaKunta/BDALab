@@ -1,0 +1,11 @@
+1) cd /usr/local #type ls if you want to check if spark is there in those files
+
+2) cd spark
+
+3) sudo gedit test.txt #to create a text file in spark folder
+4) enter some data into the test.txt file
+
+
+5) ./bin/spark-shell
+6) You will get scala
+7) val text = sc.textFile("test.txt") 
